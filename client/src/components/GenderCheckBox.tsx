@@ -1,14 +1,5 @@
-import { ChangeEvent, useState } from "react";
 
 export default function GenderCheckBox() {
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(e.target.value);
-  };
-  console.log(selectedOption);
-
-  const options = ["male", "female", "other"];
 
   return (
     <div className="flex gap-x-5 group-checked">
@@ -18,8 +9,6 @@ export default function GenderCheckBox() {
           <input
             type="checkbox"
             name="gender"
-            onChange={(e) => handleChange(e)}
-            checked={options.every((element) => element === selectedOption)}
             className="checkbox checkbox-secondary border-slate-400"
           />
         </label>
@@ -30,8 +19,6 @@ export default function GenderCheckBox() {
           <input
             type="checkbox"
             name="gender"
-            onChange={(e) => handleChange(e)}
-            checked={options.every((element) => element === selectedOption)}
             className="checkbox checkbox-secondary border-slate-400"
           />
         </label>
@@ -42,8 +29,6 @@ export default function GenderCheckBox() {
           <input
             type="checkbox"
             name="gender"
-            onChange={(e) => handleChange(e)}
-            checked={options.every((element) => element === selectedOption)}
             className="checkbox checkbox-secondary border-slate-400"
           />
         </label>

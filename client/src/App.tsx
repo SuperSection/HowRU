@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Loader from "./components/common/Loader";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -36,7 +37,9 @@ const router = createBrowserRouter(
 const App = () => {
   return (
     <div className="p-4 h-screen flex items-center justify-center -mt-2">
-      <RouterProvider router={router} />
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </div>
   );
 };

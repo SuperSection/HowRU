@@ -5,6 +5,7 @@ export interface UserDocument extends Document {
   name: string;
   username: string;
   password: string;
+  bio: string;
   avatar: string;
 
   createdAt: Date;
@@ -29,6 +30,10 @@ const userSchema = new Schema<UserDocument>(
       minlength: [6, "Must be at least 6 characters long."],
       select: false,
     },
+    bio: {
+      type: String,
+      maxlength: [150, "Must be at most 150 characters long."],
+    },
     avatar: {
       public_id: {
         type: String,
@@ -42,8 +47,16 @@ const userSchema = new Schema<UserDocument>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 
-export const User = models.User || model("User", userSchema);
+// userSchema.pre("save", async function (next: NextFunction) {
+//   if (!this.isModified("password")) {
+//     return next();
+//   }
+//   next();
+// });
+
+
+export const UserModel = model<UserDocument>("User", userSchema);

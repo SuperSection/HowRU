@@ -1,9 +1,57 @@
 import express, { Application } from "express";
-import userRouter from "./routes/user.routes";
 import "dotenv/config";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import compression from "compression";
 
-const app: Application = express();
+import connectDB from "./config/connectDB";
+import ErrorHandler from "./middlewares/errorHandler";
+import RouteController from "./utils/interfaces/routeController.interface";
 
-app.use("/api/user", userRouter);
+class App {
+  public express: Application;
+  public port: number;
 
-export default app;
+  constructor(routes: RouteController[], port: number) {
+    this.express = express();
+    this.port = port;
+
+    this.initializeDatabaseConnection();
+    this.initializeMiddleware();
+    this.initializeRouteControllers(routes);
+    this.initializeErrorHandling();
+  }
+
+  private initializeMiddleware(): void {
+    this.express.use(helmet());
+    this.express.use(cors());
+    this.express.use(morgan("dev"));
+    this.express.use(express.json());
+    this.express.use(express.urlencoded({ extended: true }));
+    this.express.use(compression());
+  }
+
+  private initializeRouteControllers(routes: RouteController[]): void {
+    routes.forEach((route: RouteController) => {
+      this.express.use("/api", route.router);
+    });
+  }
+
+  private initializeErrorHandling(): void {
+    this.express.use(ErrorHandler);
+  }
+
+  private initializeDatabaseConnection(): void {
+    const MongoDB_URI = process.env.MONGODB_URI as string;
+    connectDB(MongoDB_URI);
+  }
+
+  public listen(): void {
+    this.express.listen(this.port, () => {
+      console.log(`App listening on PORT ${this.port}`);
+    });
+  }
+}
+
+export default App;

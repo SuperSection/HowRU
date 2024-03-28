@@ -1,6 +1,9 @@
-import app from "./app";
+import "dotenv/config";
+import App from "./app";
+import UserRouter from "./routes/user.routes";
 
-const PORT = process.env.NODE_ENV || 5000;
+const PORT = process.env.SERVER_PORT;
 
+const app = new App([new UserRouter()], PORT);
 
-app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
+app.listen();

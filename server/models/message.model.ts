@@ -44,4 +44,4 @@ const messageSchema = new Schema<MessageDocument>(
 );
 
 
-export const Message = models.Message || model("Message", messageSchema);
+export const MessageModel = models.Message || model<MessageDocument>("Message", messageSchema);

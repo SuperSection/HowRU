@@ -1,12 +1,15 @@
-import { cleanEnv, port, str } from "envalid";
+import * as z from "zod";
 
-export interface Env {
-  NODE_ENV: string;
-  SERVER_PORT: number;
-}
-
-export const env = cleanEnv(process.env, {
-  // MONGODB_URI: str(),
-  NODE_ENV: str({ desc: "Node environment (development, production)" }),
-  SERVER_PORT: port({ desc: "Port on which the server listens" }),
+const envSchema = z.object({
+  SERVER_PORT: z.number().default(5000),
+  NODE_ENV: z.enum(["development", "production"]),
+  MONGODB_URI: z.string().url(),
 });
+
+envSchema.parse(process.env);
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends z.infer<typeof envSchema> {}
+  }
+}

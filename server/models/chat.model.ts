@@ -38,4 +38,4 @@ const chatSchema = new Schema<ChatDocument>(
 );
 
 
-export const Chat = models.Chat || model("Chat", chatSchema);
+export const ChatModel = models.Chat || model<ChatDocument>("Chat", chatSchema);

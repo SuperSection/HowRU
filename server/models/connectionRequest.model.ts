@@ -34,4 +34,9 @@ const connectionRequestSchema = new Schema<ConnectionRequestDocument>(
 );
 
 
-export const ConnectionRequest = models.ConnectionRequest || model("ConnectionRequest", connectionRequestSchema);
+export const ConnectionRequestModel =
+  models.ConnectionRequest ||
+  model<ConnectionRequestDocument>(
+    "ConnectionRequest",
+    connectionRequestSchema,
+  );

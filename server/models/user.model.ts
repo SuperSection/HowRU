@@ -1,4 +1,5 @@
-import { Document, Schema, model, models } from "mongoose";
+import { Document, Schema, model } from "mongoose";
+import { hash } from "bcryptjs";
 
 
 export interface UserDocument extends Document {
@@ -6,7 +7,10 @@ export interface UserDocument extends Document {
   username: string;
   password: string;
   bio: string;
-  avatar: string;
+  avatar: {
+    public_id: string;
+    url: string;
+  };
 
   createdAt: Date;
   updatedAt: Date;
@@ -32,7 +36,7 @@ const userSchema = new Schema<UserDocument>(
     },
     bio: {
       type: String,
-      maxlength: [150, "Must be at most 150 characters long."],
+      maxlength: [400, "Must be under 400 characters."],
     },
     avatar: {
       public_id: {
@@ -51,12 +55,13 @@ const userSchema = new Schema<UserDocument>(
 );
 
 
-// userSchema.pre("save", async function (next: NextFunction) {
-//   if (!this.isModified("password")) {
-//     return next();
-//   }
-//   next();
-// });
+// Hash password on save change
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  this.password = await hash(this.password, 10);
+  next();
+});
 
 
 export const UserModel = model<UserDocument>("User", userSchema);

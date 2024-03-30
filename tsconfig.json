@@ -31,17 +31,17 @@
 
     /* Import alias */
     "baseUrl": "./server",
-    "paths": {
-      "@/utils/*": ["utils/*"],
-      "@/config/*": ["config/*"],
-      "@/models/*": ["models/*"],
-      "@/routes/*": ["routes/*"],
-      "@/constants/*": ["constants/*"],
-      "@/controllers/*": ["controllers/*"],
-      "@/middlewares/*": ["middlewares/*"],
-      "@/services/*": ["services/*"],
-      "@/types/*": ["types/*"],
-    }
+    // "paths": {
+    //   "@/utils/*": ["utils/*"],
+    //   "@/config/*": ["config/*"],
+    //   "@/models/*": ["models/*"],
+    //   "@/routes/*": ["routes/*"],
+    //   "@/constants/*": ["constants/*"],
+    //   "@/controllers/*": ["controllers/*"],
+    //   "@/middlewares/*": ["middlewares/*"],
+    //   "@/services/*": ["services/*"],
+    //   "@/types/*": ["types/*"],
+    // }
   },
   "include": ["./*.js", "server/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist"]

@@ -8,13 +8,10 @@ class UserService {
    * Create a new user
    */
   public async create(
-    name: string,
-    username: string,
-    password: string,
-    avatar: string,
+    data : UserDocument
   ): Promise<UserDocument> {
     try {
-      const user = await this.user.create({ name, username, password, avatar });
+      const user = await this.user.create({ ...data });
       return user;
     } catch (error) {
       throw new Error("Failed to create user.");

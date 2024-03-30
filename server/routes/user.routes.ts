@@ -1,21 +1,47 @@
 import { Router } from "express";
-import { register, login } from "../controllers/user.controller";
-import RouteController from "../utils/interfaces/routeController.interface";
+
+import { singleAvatar } from "../middlewares/multer.middleware";
 import validationMiddleware from "../middlewares/validation.middleware";
-import { registrationSchema } from "../utils/validators/auth.validation";
+import RouteController from "../utils/interfaces/routeController.interface";
+import { loginSchema, registrationSchema } from "../utils/validators/auth.validation";
+import { register, login, getUserProfile, logout, searchUser } from "../controllers/user.controller";
+import isUserAuthenticated from "../middlewares/auth.middleware";
 
 
 class UserRouter implements RouteController {
-  public path = "/users";
-    public router = Router();
+  public path = "/user";
+  public router = Router();
 
   constructor() {
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-      this.router.post(`/register`, validationMiddleware(registrationSchema), register);
-      this.router.post(`/login`, login);
+    /**
+     * Public Routes
+     */
+    this.router.post(
+      `/register`,
+      singleAvatar,
+      validationMiddleware(registrationSchema),
+      register,
+    );
+
+    this.router.post(`/login`, validationMiddleware(loginSchema), login);
+
+
+    // to protect following routes
+    this.router.use(isUserAuthenticated);
+
+
+    /**
+     * Protected Routes
+     */
+    this.router.get(`${this.path}/profile`, getUserProfile);
+
+    this.router.post(`${this.path}/logout`, logout);
+
+    this.router.get(`${this.path}/search`, searchUser);
   }
 }
 

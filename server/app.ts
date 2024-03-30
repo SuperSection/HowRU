@@ -4,10 +4,12 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import compression from "compression";
+import cookieParser from "cookie-parser";
 
 import connectDB from "./config/connectDB";
 import ErrorHandler from "./middlewares/errorHandler";
 import RouteController from "./utils/interfaces/routeController.interface";
+
 
 class App {
   public express: Application;
@@ -29,6 +31,7 @@ class App {
     this.express.use(morgan("dev"));
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: true }));
+    this.express.use(cookieParser());
     this.express.use(compression());
   }
 
@@ -53,5 +56,6 @@ class App {
     });
   }
 }
+
 
 export default App;

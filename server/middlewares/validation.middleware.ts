@@ -1,8 +1,7 @@
 import * as z from "zod";
 import { Request, Response, NextFunction, RequestHandler } from "express";
 
-import HttpException from "../utils/exceptions/http.exception";
-
+import HttpException from "../utils/classes/http.exception";
 
 function validationMiddleware(schema: z.Schema): RequestHandler {
   return async (
@@ -36,6 +35,5 @@ function validationMiddleware(schema: z.Schema): RequestHandler {
     }
   };
 }
-
 
 export default validationMiddleware;

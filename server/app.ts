@@ -9,6 +9,9 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/connectDB";
 import ErrorHandler from "./middlewares/errorHandler";
 import RouteController from "./utils/interfaces/routeController.interface";
+import { createSampleUsers } from "./seeders/user.seed";
+import { createGroupChats, createPersonalChats } from "./seeders/chat.seed";
+import { createMessages, createMessagesInAChat } from "./seeders/message.seed";
 
 
 class App {
@@ -56,6 +59,5 @@ class App {
     });
   }
 }
-
 
 export default App;

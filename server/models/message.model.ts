@@ -27,21 +27,23 @@ const messageSchema = new Schema<MessageDocument>(
       ref: "Chat",
       required: true,
     },
-    attachments: {
-      public_id: {
-        type: String,
-        required: true,
+    attachments: [
+      {
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
       },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
+    ],
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 
-export const MessageModel = models.Message || model<MessageDocument>("Message", messageSchema);
+export const MessageModel = model<MessageDocument>("Message", messageSchema);

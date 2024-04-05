@@ -1,23 +1,38 @@
+import { ObjectId } from "mongoose";
 import { UserDocument, UserModel } from "../models/user.model";
+import { CreateUserSchema } from "../utils/validators/auth.validation";
+import HttpException from "../utils/classes/http.exception";
 
-
-class UserService {
-  private user = UserModel;
-    
-  /**
-   * Create a new user
-   */
-  public async create(
-    data : UserDocument
-  ): Promise<UserDocument> {
-    try {
-      const user = await this.user.create({ ...data });
-      return user;
-    } catch (error) {
-      throw new Error("Failed to create user.");
-    }
+/**
+ * Create a new user
+ */
+const createUser = async (data: CreateUserSchema): Promise<UserDocument> => {
+  try {
+    const newUser = await UserModel.create({ ...data });
+    return newUser;
+  } catch (error) {
+    throw new HttpException(500, "Failed to create user.");
   }
-}
+};
 
+/**
+ * Get user by userId
+ * @param userId
+ * @returns UserDocument
+ */
+const getUserById = async (
+  userId: ObjectId | string,
+  options?: string,
+): Promise<UserDocument> => {
+  try {
+    const userData = await UserModel.findById(userId, options);
+    if (!userData) {
+      throw new HttpException(400, "User not found.");
+    }
+    return userData;
+  } catch (error) {
+    throw new HttpException(500, "Failed to find user.");
+  }
+};
 
-export default UserService;
+export { createUser, getUserById };

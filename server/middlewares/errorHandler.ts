@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import HttpException from "../utils/exceptions/http.exception";
+import HttpException from "../utils/classes/http.exception";
 
 function errorHandler(
   error: HttpException,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const status = error.status || 500;
   const message = error.message || "Something went wrong.";

@@ -1,5 +1,5 @@
-import { Document, Schema, model } from "mongoose";
 import { hash } from "bcryptjs";
+import { Document, Schema, model } from "mongoose";
 
 
 export interface UserDocument extends Document {
@@ -7,7 +7,7 @@ export interface UserDocument extends Document {
   username: string;
   password: string;
   bio: string;
-  avatar: {
+  profilePicture: {
     public_id: string;
     url: string;
   };
@@ -38,7 +38,7 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       maxlength: [400, "Must be under 400 characters."],
     },
-    avatar: {
+    profilePicture: {
       public_id: {
         type: String,
         required: true,

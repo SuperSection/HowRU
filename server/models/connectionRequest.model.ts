@@ -1,4 +1,4 @@
-import { Document, ObjectId, Schema, model, models } from "mongoose";
+import { Document, ObjectId, Schema, model } from "mongoose";
 
 
 export interface ConnectionRequestDocument extends Document {
@@ -34,9 +34,7 @@ const connectionRequestSchema = new Schema<ConnectionRequestDocument>(
 );
 
 
-export const ConnectionRequestModel =
-  models.ConnectionRequest ||
-  model<ConnectionRequestDocument>(
-    "ConnectionRequest",
-    connectionRequestSchema,
-  );
+export const ConnectionRequestModel = model<ConnectionRequestDocument>(
+  "ConnectionRequest",
+  connectionRequestSchema,
+);

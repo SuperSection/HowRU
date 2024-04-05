@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import { Response, NextFunction } from "express";
 
-import HttpException from "../utils/exceptions/http.exception";
-import UserRequest from '../utils/interfaces/userRequest.interface';
+import HttpException from "../utils/classes/http.exception";
+import UserRequest from "../utils/interfaces/userRequest.interface";
 import UserJwtPayload from "../utils/interfaces/userJwtPayload.interface";
 
 
@@ -15,7 +15,6 @@ const isUserAuthenticated = (
     const token =
       req.cookies?.howruToken ||
       req.header("Authorization")?.replace("Bearer ", "");
-    console.log(token);
 
     if (!token) {
       return next(
@@ -27,7 +26,6 @@ const isUserAuthenticated = (
       token,
       process.env.JWT_SECRET,
     ) as UserJwtPayload;
-    console.log(decodedToken);
 
     req.user = { _id: decodedToken.userId };
     next();
@@ -36,7 +34,6 @@ const isUserAuthenticated = (
     res.status(400).json({ message: "Invalid access.", error });
   }
 };
-
 
 
 export default isUserAuthenticated;

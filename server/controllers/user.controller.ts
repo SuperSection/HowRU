@@ -14,6 +14,7 @@ import ApiResponse from "../utils/classes/ApiResponse.class";
 import asyncTryCatchHandler from "../utils/asyncTryCatchHandler";
 import isPasswordCorrect from "../utils/features/verifyPassword";
 import UserRequest from "../utils/interfaces/userRequest.interface";
+import { uploadFilesToCloudinary } from "../utils/features/cloudinary";
 import { ConnectionRequestModel } from "../models/connectionRequest.model";
 import sendToken, { cookieOptions } from "../utils/features/generateToken";
 
@@ -24,9 +25,17 @@ const register = asyncTryCatchHandler(
     const { name, username, password, bio } = req.body;
     // console.log(req.body);
 
+    const file = req.file;
+    if (!file) {
+      return next(new HttpException(400, "Please upload a profile picture."));
+    }
+    console.log(file);
+
+    const avatar = await uploadFilesToCloudinary([file]);
+
     const profilePicture = {
-      public_id: "bdqw98h",
-      url: "cbq0",
+      public_id: avatar[0]?.public_id,
+      url: avatar[0]?.url,
     };
 
     const newUser = await createUser({

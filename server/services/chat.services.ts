@@ -3,6 +3,7 @@ import { ChatDocument, ChatModel } from "../models/chat.model";
 import HttpException from "../utils/classes/http.exception";
 import { CreateChatSchemaType } from "utils/validators/chat.validation";
 
+
 /**
  * Create a new user
  */

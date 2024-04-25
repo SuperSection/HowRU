@@ -3,6 +3,7 @@ import { UserDocument, UserModel } from "../models/user.model";
 import { CreateUserSchema } from "../utils/validators/auth.validation";
 import HttpException from "../utils/classes/http.exception";
 
+
 /**
  * Create a new user
  */
@@ -14,6 +15,7 @@ const createUser = async (data: CreateUserSchema): Promise<UserDocument> => {
     throw new HttpException(500, "Failed to create user.");
   }
 };
+
 
 /**
  * Get user by userId
@@ -34,5 +36,6 @@ const getUserById = async (
     throw new HttpException(500, "Failed to find user.");
   }
 };
+
 
 export { createUser, getUserById };

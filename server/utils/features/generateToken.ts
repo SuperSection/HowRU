@@ -7,7 +7,7 @@ import UserJwtPayload from "../../utils/interfaces/userJwtPayload.interface";
 
 export const cookieOptions: CookieOptions = {
   maxAge: 15 * 24 * 60 * 60 * 1000,
-  sameSite: "none",
+  sameSite: "strict",
   httpOnly: true,
   secure: process.env.NODE_ENV === "production" ? true : false,
 };

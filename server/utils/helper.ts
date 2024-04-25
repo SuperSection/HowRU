@@ -3,7 +3,7 @@ import { ObjectId } from "mongoose";
 import { UserDocument, UserModel } from "../models/user.model";
 
 
-const getTheConnectedUser = async (
+export const getTheConnectedUser = async (
   members: any,
   userId: ObjectId | string,
 ): Promise<UserDocument> =>
@@ -12,4 +12,5 @@ const getTheConnectedUser = async (
   );
 
 
-export { getTheConnectedUser };
+export const getBase64 = (file: any) =>
+  `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;

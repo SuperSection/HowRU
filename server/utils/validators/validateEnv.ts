@@ -6,6 +6,11 @@ const envSchema = z.object({
   MONGODB_URI: z.string().url(),
   JWT_SECRET: z.string(),
   JWT_EXPIRY: z.string(),
+  CLIENT_URL: z.string().url(),
+
+  CLOUDINARY_CLOUD_NAME: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
 });
 
 envSchema.parse(process.env);

@@ -12,6 +12,7 @@ import RouteController from "./utils/interfaces/routeController.interface";
 import { createSampleUsers } from "./seeders/user.seed";
 import { createGroupChats, createPersonalChats } from "./seeders/chat.seed";
 import { createMessages, createMessagesInAChat } from "./seeders/message.seed";
+import { v2 as cloudinary } from "cloudinary";
 
 
 class App {
@@ -23,6 +24,7 @@ class App {
     this.port = port;
 
     this.initializeDatabaseConnection();
+    this.initializeCloudinary();
     this.initializeMiddleware();
     this.initializeRouteControllers(routes);
     this.initializeErrorHandling();
@@ -30,7 +32,17 @@ class App {
 
   private initializeMiddleware(): void {
     this.express.use(helmet());
-    this.express.use(cors());
+    this.express.use(
+      cors({
+        origin: [
+          "http://localhost:3000",
+          "http://localhost:5173",
+          "http://localhost:4173",
+          process.env.CLIENT_URL,
+        ],
+        credentials: true,
+      }),
+    );
     this.express.use(morgan("dev"));
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: true }));
@@ -40,7 +52,7 @@ class App {
 
   private initializeRouteControllers(routes: RouteController[]): void {
     routes.forEach((route: RouteController) => {
-      this.express.use("/api", route.router);
+      this.express.use("/api/v1", route.router);
     });
   }
 
@@ -53,11 +65,20 @@ class App {
     connectDB(MongoDB_URI);
   }
 
+  private initializeCloudinary(): void {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+  }
+
   public listen(): void {
     this.express.listen(this.port, () => {
       console.log(`App listening on PORT ${this.port}`);
     });
   }
 }
+
 
 export default App;

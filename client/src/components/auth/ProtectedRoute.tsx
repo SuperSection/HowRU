@@ -7,11 +7,12 @@ type ProtectedRouteProps = PropsWithChildren;
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   const { user } = useAppSelector((state) => state.auth);
+  console.log(user);
   const navigate = useNavigate();
   const redirectUrl = "/login";
 
   useEffect(() => {
-    if (user === null) {
+    if (!user) {
       navigate(redirectUrl, { replace: true });
     }
   }, [navigate, redirectUrl, user])

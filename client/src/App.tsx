@@ -48,12 +48,6 @@ const router = createBrowserRouter(
       element: <NotFound />,
     },
   ],
-  {
-    future: {
-      // Normalize `useNavigation()`/`useFetcher()` `formMethod` to uppercase
-      v7_normalizeFormMethod: true,
-    },
-  },
 );
 
 

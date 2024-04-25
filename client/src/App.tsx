@@ -14,6 +14,7 @@ const Home = React.lazy(() => import("./pages/Home"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Chat = React.lazy(() => import("./pages/Chat"));
 const Register = React.lazy(() => import("./pages/Register"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 
 const router = createBrowserRouter(
@@ -44,7 +45,7 @@ const router = createBrowserRouter(
     },
     {
       path: "*",
-      element: <div>404</div>,
+      element: <NotFound />,
     },
   ],
   {
